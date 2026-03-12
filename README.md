@@ -7,8 +7,8 @@
 ## ✨ 项目功能
 
 * ✅ 支持 **多个账号并发签到**
-* 🎁 自动判断是否为**第七天签到**并领取额外金豆
-* 💰 获取并显示当前账号金豆余额
+* 🎁 自动判断是否为**第七天签到**并领取8个金豆
+* 💰 获取并显示当前账号金豆数量
 * 📊 将账号按通知 `SendKey` 分组，分组推送签到结果
 * 📲 使用 **Server 酱** 实时推送签到通知到微信
 
@@ -25,42 +25,12 @@
 5. 多个账号用英文逗号 `,` 分隔
 6. 建议使用手机抓包，请勿手动退出账号，否则会导致token失效
 
-> 示例：
-
-```bash
-TOKEN_LIST="token1,token2,token3"
-```
-
 ### 2️⃣ 获取 SendKey（Server 酱）
 
 1. 打开 [Server 酱官网](https://sct.ftqq.com/)
 2. 注册并登录后，进入「发送通道」页面
 3. 创建通知通道并获取 `SendKey`
 4. 多个账号用英文逗号 `,` 分隔，**数量需与 TOKEN\_LIST 一一对应**
-
-> 示例：
-
-```bash
-SEND_KEY_LIST="key1,key2,key3"
-```
-
----
-
-## ⚙️ 环境变量配置
-
-支持通过环境变量传参，适用于定时任务部署、云函数等场景：
-
-```bash
-export TOKEN_LIST="token1,token2"
-export SEND_KEY_LIST="sendkey1,sendkey2"
-```
-
-也可通过 `.env` 文件或 CI/CD 系统配置界面进行设置：
-
-```
-TOKEN_LIST=token1,token2
-SEND_KEY_LIST=sendkey1,sendkey2
-```
 
 ---
 
@@ -79,13 +49,10 @@ SEND_KEY_LIST=sendkey1,sendkey2
 ### token 用英文逗号分隔！不需要加单引号双引号。多个账号之间用逗号隔开就好了。有几个账号，就贴几个通知KEY（可以相同，也可以不同。不同的没测试过不一定能用）。不然跑不起来
 ### 本地运行配置
 
-创建 `.env` 文件：
-
 ```ini
-TOKEN_LIST=your_token1,your_token2
-SEND_KEY_LIST=your_key1,your_key2
+TOKEN_LIST这样填：your_token1,your_token2
+SEND_KEY_LIST这样填：your_key1,your_key2
 ```
-
 ---
 
 ## 📋 执行流程
@@ -105,7 +72,7 @@ name: JLC Auto Sign
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # 每 6 小时执行一次，UTC 时间
+    - cron: '0 16,22,4,10 * * *'  # 每 6 小时执行一次，UTC + 8 北京时间
 
   workflow_dispatch:
 
